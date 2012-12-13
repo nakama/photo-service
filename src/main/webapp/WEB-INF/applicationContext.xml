@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans SYSTEM "jar:spring-2.0.6.jar:org/springframework/beans/factory/xml/spring-beans.dtd">
+
+<beans>
+
+	<import resource="classpath:spring/mongodb-service-dao.xml" />
+	<import resource="classpath:spring/redis-beans.xml" />
+	<import resource="classpath:spring/service-beans.xml" />
+</beans>
+

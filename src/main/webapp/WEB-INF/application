@@ -1,0 +1,3 @@
+com.seabright.services.metadata.endpoint.LabelWSApi
+com.seabright.services.metadata.endpoint.PhotoWSApi
+com.seabright.services.metadata.endpoint.SystemResourceWsApi

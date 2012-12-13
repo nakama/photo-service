@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+      PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+      "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+
+<web-app>
+	<display-name>Data Access in Json</display-name>
+	<description>Provides an interface to access internal databases</description>
+			
+	<context-param>
+	  <param-name>contextConfigLocation</param-name>
+	  <param-value>classpath:META-INF/server/wink-core-context.xml, WEB-INF/applicationContext.xml
+	  </param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+
+	<servlet>
+		<servlet-name>WinkServlet</servlet-name>
+		<servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+		<init-param>
+			<param-name>applicationConfigLocation</param-name>
+			<param-value>/WEB-INF/application</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WinkServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+</web-app>
+  
