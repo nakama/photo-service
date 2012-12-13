@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</prop>
+				<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.memcached.cacheTimeSeconds">3600</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.memcached.config.clearSupported">true</prop> 
+				<prop key="hibernate.cache.use_structured_entries">true</prop>
+				<prop key="hibernate.show_sql">FALSE</prop>
+				<prop key="hibernate.use_outer_join">false</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="connection.release_mode">after_statement</prop> 
+				<prop key="transaction.auto_close_session">true</prop> 
+				<prop key="hibernate.connection.release_mode">after_statement</prop>
+				<prop key="hibernate.c3p0.min_size">5</prop>
+				<prop key="hibernate.c3p0.max_size">20</prop>
+				<prop key="hibernate.c3p0.timeout">1800</prop>
+				<prop key="hibernate.c3p0.max_statements">50</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" autowire="byName">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="hibernateProperties">
+			<ref local="hibernateProperties" />
+		</property>
+		<property name="annotatedClasses">
+     	<list>
+    	  <value></value>
+     </list>
+   </property>
+   </bean>
+   
+    <bean id="hibernateUserDao" class="com.service.dao.MongoDBUserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>	
+	
+</beans>
