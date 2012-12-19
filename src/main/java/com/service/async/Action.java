@@ -1,7 +1,8 @@
 package com.service.async;
 
 
-import com.service.controllers.PhotoService;
+
+import com.service.controller.PhotoService;
 import com.service.jms.RedisJMSClient;
 
 

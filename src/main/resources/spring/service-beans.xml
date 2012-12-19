@@ -22,55 +22,17 @@
 		<property name="restPhotoService" ref="restPhotoService"/>
 	</bean>
     
-    <bean id="restPhotoService" class="com.service.controllers.RestPhotoServiceImpl">
-		<property name="photoDao" ref="photoDao" />
+    <bean id="restPhotoService" class="com.service.controller.RestPhotoServiceImpl">
+		<property name="thingDao" ref="thingDao" />
+		<property name="redisClient" ref="jmsClient"/>
 	</bean>
 	
    
 
-	<bean id="redisPhotoService" class="com.service.controllers.RedisPhotoServiceImpl">
-		<property name="photoDao" ref="photoDao" />
-	</bean>
-
-	<bean name="photoUploader" class="com.service.async.PhotoUploader">
-		<property name="photoDao" ref="photoDao" />
-		<property name ="jmsClient" ref="jmsClient"></property>
+	<bean id="redisPhotoService" class="com.service.controller.RedisPhotoServiceImpl">
+		<property name="thingDao" ref="thingDao" />
+		<property name="instagramApiId" value="181bd8727613437f9f50e5b4aea03572"/>
+		<property name="jmsSender" ref="jmsSender"/>
 	</bean>
 	
-	
-	<bean name="photoUploaderJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-
-		<property name="jobClass" value="com.service.async.PhotoUploaderJob" />
-
-		<property name="jobDataAsMap">
-			<map>
-				<entry key="photoUploader" value-ref="photoUploader" />
-			</map>
-		</property>
-
-	</bean>
-
-	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-
-		<property name="jobDetail" ref="photoUploaderJob" />
-		<property name="repeatInterval" value="15000" />
-		<property name="startDelay" value="1000" />
-
-	</bean>
-
-
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="jobDetails">
-			<list>
-				<ref bean="photoUploaderJob" />
-			</list>
-		</property>
-
-		<property name="triggers">
-			<list>
-				<ref bean="simpleTrigger" />
-			</list>
-		</property>
-	</bean>
-
 </beans>

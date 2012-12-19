@@ -1,7 +1,7 @@
 package com.service.rest;
 
-import java.math.BigInteger;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,11 +9,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import com.service.controllers.PhotoService;
+
+import com.service.controller.PhotoService;
+import com.utils.json.JSONMapper;
+import com.utils.json.JSONMapperException;
 import com.utils.logging.MyLogger;
 import com.utils.wsutils.ServiceException;
+import com.utils.wsutils.ServiceResponse;
 
-@Path("photo")
+@Path("ws")
 public class PhotoWsApi {
 	
 	private static MyLogger logger = new MyLogger(PhotoWsApi.class);
@@ -26,9 +30,12 @@ public class PhotoWsApi {
 	public String add (String paylaod)  {
 		logger.logInfo("add photo");
 		try {
-			return (String) restPhotoService.executeAction("add", paylaod);
+			Map<String,Object> request = (Map<String, Object>) JSONMapper.toObject(paylaod, Map.class);
+			return (String) restPhotoService.executeAction("add", request);
 		} catch (ServiceException e) {
-			return null;
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
+		} catch (JSONMapperException e) {
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
 		}
 	}
 	
@@ -39,9 +46,12 @@ public class PhotoWsApi {
 	public String update (String paylaod)  {
 		logger.logInfo("update photo");
 		try {
-			return (String) restPhotoService.executeAction("update", paylaod);
+			Map<String,Object> request = (Map<String, Object>) JSONMapper.toObject(paylaod, Map.class);
+			return (String) restPhotoService.executeAction("update", request);
 		} catch (ServiceException e) {
-			return null;
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
+		} catch (JSONMapperException e) {
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
 		}
 	}
 	
@@ -52,49 +62,34 @@ public class PhotoWsApi {
 	public String fetch (String paylaod)  {
 		logger.logInfo("fetch photos");
 		try {
-			return (String) restPhotoService.executeAction("fetch", paylaod);
+			Map<String,Object> request = (Map<String, Object>) JSONMapper.toObject(paylaod, Map.class);
+			return (String) restPhotoService.executeAction("fetch", request);
 		} catch (ServiceException e) {
-			return null;
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
+		} catch (JSONMapperException e) {
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
 		}
 	}
 	
 	@GET
-	@Path("get/id/{id}")
+	@Path("autocomplete/{id}/{word}")
 	@Produces(MediaType.APPLICATION_JSON) 
-	public String get (@PathParam("id") BigInteger id)  {
+	public String get (@PathParam("id") String id, @PathParam("word") String word)  {
 		logger.logInfo("get user");
 		try {
-			return (String) restPhotoService.executeAction("get", id);
+			Map<String,Object> request = new HashMap<String,Object>();
+			request.put("userId", id);
+			request.put("word", word);
+			return (String) restPhotoService.executeAction("autocomplete", request);
 		} catch (ServiceException e) {
-			return null;
+			return (String) ServiceResponse.generateServiceResponse(false, e.getMessage(), null); 
 		}
 	}
 	
-	@GET
-	@Path("list/{id}")
-	@Produces(MediaType.APPLICATION_JSON) 
-	public String list (@PathParam("id") String id)  {
-		logger.logInfo("get user");
-		try {
-			return (String) restPhotoService.executeAction("list", id);
-		} catch (ServiceException e) {
-			return null;
-		}
-	}
+
 	
 	
-	@POST
-	@Path("delete")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String delete (String payload)  {
-		logger.logInfo("delete user");
-		try {
-			return (String) restPhotoService.executeAction("delete", payload);
-		} catch (ServiceException e) {
-			return null;
-		}
-	}
+
 
 	public static MyLogger getLogger() {
 		return logger;

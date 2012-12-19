@@ -25,6 +25,10 @@
 
   <bean id="jmsClient" class="com.service.jms.RedisJMSClient">
 		<property name="template" ref="redisTemplate" />
+		<property name="jedis" ref="jedis"/>
+  </bean>
+  <bean id ="jedis" class="redis.clients.jedis.Jedis">
+  	 <constructor-arg value="localhost"/>
   </bean>
   
 <bean id="photoAction"  class = "com.service.async.PhotoAction">

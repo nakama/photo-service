@@ -18,7 +18,7 @@
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
  
-	<bean id="photoDao" class="com.service.dao.PhotoDaoImpl">
+	<bean id="thingDao" class="com.service.dao.ThingDaoImpl">
 		<property name="mongoTemplate" ref="mongoTemplate"/>
 	</bean>	
  	

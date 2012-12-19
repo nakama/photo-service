@@ -3,6 +3,7 @@
 
 <beans>
 
+	<import resource="classpath:spring/amq-beans.xml" />
 	<import resource="classpath:spring/mongodb-service-dao.xml" />
 	<import resource="classpath:spring/redis-beans.xml" />
 	<import resource="classpath:spring/service-beans.xml" />
