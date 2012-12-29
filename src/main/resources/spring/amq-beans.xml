@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans SYSTEM "jar:spring-2.0.6.jar:org/springframework/beans/factory/xml/spring-beans.dtd">
+
+<beans>
+
+	
+<bean id="jmsSender" class="com.utils.activemq.JmsSender">
+		<property name="brokerURL" value="tcp://ec2-23-23-8-2.compute-1.amazonaws.com:61616" />
+		<property name="queue" value="async" />	
+</bean>
+</beans>
